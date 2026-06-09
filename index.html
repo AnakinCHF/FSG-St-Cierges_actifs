@@ -154,6 +154,8 @@ main{max-width:var(--maxw);margin:0 auto;padding:0 22px 80px}
 .pill{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-weight:800;padding:4px 10px;border-radius:999px;background:rgba(27,122,67,.12);color:var(--green-deep)}
 .pill.alert{background:var(--alert-soft);color:var(--alert)}
 .annonce p{color:var(--ink-soft)}
+.annonce-lien{display:inline-block;margin-top:12px;font-size:.86rem;font-weight:700;color:var(--green);text-decoration:none;border:2px solid var(--green);padding:6px 16px;border-radius:8px;transition:.2s}
+.annonce-lien:hover{background:var(--green);color:#fff}
 .empty{background:var(--surface);border:2px dashed var(--line);border-radius:var(--radius);padding:30px;text-align:center;color:var(--ink-soft)}
 
 /* ---------- ENTRAINEMENTS (tableau de la saison) ---------- */
@@ -202,7 +204,7 @@ tr.next-row td{border-top:2px solid var(--green-bright)}
 .comp-main p{color:var(--ink-soft);margin-bottom:12px}
 .orga{background:rgba(27,122,67,.06);border-radius:var(--radius-sm);padding:12px 14px;border:1px solid rgba(27,122,67,.12)}
 .orga .lbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:800;display:block;margin-bottom:4px}
-.orga p{margin:0;font-size:.92rem;color:var(--ink)}
+.orga p{margin:0;font-size:.92rem;color:var(--ink);line-height:1.75}
 
 /* events reuse comp styles with accent */
 .event .comp-date{background:linear-gradient(150deg,#b3661a,#d98a2b)}
@@ -414,16 +416,24 @@ const CONTENU = {
      ============================================================ */
   annonces: [
     {
-      titre: "Bientôt concours Kerzers",
+      titre: "Kerzers — nouvelles informations disponibles",
       date: "26-27 juin",
+      urgent: true,
+      texte: "De nouvelles informations sont disponibles pour la compétition de Kerzers (26-27 juin). Consulte l'onglet Compétitions pour tous les détails d'organisation. Les horaires de passage individuels sont disponibles dans le PDF ci-dessous.",
+      lien: "http://files.designer.hoststar.ch/1c/65/1c65f99e-33a3-4ec8-a464-056d04b35d0b.pdf",
+      lienLabel: "📄 Voir les horaires (PDF)"
+    },
+    {
+      titre: "Soirée de gym — appel aux idées !",
+      date: "15, 20 et 21 novembre",
       urgent: false,
-      texte: "contrôler vos heures de passages, les autres informations suivront"
+      texte: "La soirée de gym aura lieu les 15 (répétition générale), 20 et 21 novembre 2026. Thème de cette année : \"Contes et légendes\". Tu as une idée de numéro ou de chorégraphie ? Fais-le savoir au coach !"
     },
     {
       titre: "Ulm",
       date: "3-4 octobre",
       urgent: false,
-      texte: " le Décathlon d'Ulm aura lieu les 3 et 4 octobre, j'encourage tout le monde à y participer, c'est vraiment une expérience cool et c'est rare de trouver des décathlons avec une ambiance familiale comme là-bas"
+      texte: " le décathlon de Ulm aura lieu les 3 et 4 octobres, j'encourage tout le monde a y participé, c'est vraiment une expérience cool et c'est rare de trouver des décathlons avec une ambiance familiale comme la bas."
     },
   ],
 
@@ -445,36 +455,36 @@ const CONTENU = {
       lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)",
       disciplines: "Longueur et hauteur"
     },
-    { date: "09.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "longueur et hauteur" },
-    { date: "16.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "course de demi fond" },
-    { date: "23.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "sprint et javelot" },
-    { date: "30.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Haies et perche" },
-    { date: "07.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "longueur et disque" },
-    { date: "14.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "hauteur et javelot" },
-    { date: "21.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Haies et Boulet" },
-    { date: "28.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Sprint et perche" },
-    { date: "04.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "11.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "18.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "25.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "01.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "08.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "15.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "22.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "29.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "06.10.2026", horaire: "20h00 – 22h00", lieu: "salle thierrens ou st-cierges", disciplines: "soirée de gym" },
-    { date: "13.10.2026", horaire: "20h00 – 22h00", lieu: "salle thierrens ou st-cierges", disciplines: "soirée de gym" },
-    { date: "20.10.2026", horaire: "20h00 – 22h00", lieu: "salle thierrens ou st-cierges", disciplines: "soirée de gym" },
-    { date: "27.10.2026", horaire: "20h00 – 22h00", lieu: "salle thierrens ou st-cierges", disciplines: "soirée de gym" },
-    { date: "03.11.2026", horaire: "20h00 – 22h00", lieu: "salle thierrens ou st-cierges", disciplines: "soirée de gym" },
-    { date: "10.11.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "17.11.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "24.11.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "01.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "08.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "15.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "À définir" },
-    { date: "22.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "vacances" },
-    { date: "29.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "vacances" },
+    { date: "09.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Estafette, boulet" },
+    { date: "16.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Course demi-fond" },
+    { date: "23.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Sprint, javelot" },
+    { date: "30.06.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Gainage et jeux" },
+    { date: "07.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Perche, disque" },
+    { date: "14.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Haies, javelot" },
+    { date: "21.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Sprint, disque" },
+    { date: "28.07.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Longueur, hauteur" },
+    { date: "04.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Haies, boulet" },
+    { date: "11.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Perche, javelot" },
+    { date: "18.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Sprint, disque" },
+    { date: "25.08.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Longueur, hauteur" },
+    { date: "01.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Perche, disque" },
+    { date: "08.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Haies, longueur" },
+    { date: "15.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Perche, boulet" },
+    { date: "22.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Hauteur, disque" },
+    { date: "29.09.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Haies, javelot" },
+    { date: "06.10.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Apéro et jeux" },
+    { date: "13.10.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Choré" },
+    { date: "20.10.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Choré" },
+    { date: "27.10.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Choré" },
+    { date: "03.11.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Choré" },
+    { date: "10.11.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Choré" },
+    { date: "17.11.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Choré" },
+    { date: "24.11.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Apéro et jeux" },
+    { date: "01.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Renfo musculaire / course / etc." },
+    { date: "08.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Renfo musculaire / course / etc." },
+    { date: "15.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Renfo musculaire / course / etc." },
+    { date: "22.12.2026", horaire: "20h00 – 22h00", lieu: "Terrain de St-Cierges (ou salle de Thierrens s'il pleut)", disciplines: "Jeux de Noël" },
+    { date: "29.12.2026", horaire: "—", lieu: "—", disciplines: "Congé" },
   ],
 
   /* ============================================================
@@ -487,16 +497,16 @@ const CONTENU = {
       mois: "Juin",
       nom: "fête du seeland / mittland",
       lieu: "Kerzers",
-      description: "fête qui ressemble à une fédérale dans le fonctionnement. concours individuel le vendredi 26 juin avec 6 et 5 disciplines pour les hommes (6 pour 2004 et plus âgés) et 4 disciplines pour les femmes. et concours de société 3 parties le jour d'après (27 juin), où on choisit 3 disciplines qu'on fait tous pour rapporter des points pour le groupe. Le but serait de faire le concours individuel, puis de dormir au camping (j'imagine qu'il y en a un) et d'enchaîner sur le concours de société. le PDF de cette année n'est pas encore dispo, mais ça ressemble à celui de l'année passée si vous avez besoin de plus d'info : http://stf2024.ch/wp-content/uploads/2023/09/Wettkampfvorschriften_2024_2023.09.09_definitiv.pdf",
-      organisation: "à venir"
+      description: "fête qui ressemble à une fédéral dans le fonctionnement. concourt individuelle le vendredi 26 juin avec 6 et 5 discipline pour les hommes (6 pour 2004 et plus agé) et 4 discipline pour les femmes. et concours de société 3 parties le jours d'après (27 juin), où on choisit 3 discipline qu on fait tous pour rapporté des points pour le groupe. Le but serait de faire le concours individuelle, puis de dormir au camping (j'imagine qu il y en a un) et d'enchainer sur le concours de société. le pdf de cette année est pas encore dispo, mais ça ressemble a celui de l'année passsé si vous avez besoin de plus d'info :http://stf2024.ch/wp-content/uploads/2023/09/Wettkampfvorschriften_2024_2023.09.09_definitiv.pdf",
+      organisation: "📅 VENDREDI 26 JUIN — Concours individuel\nDépart voitures depuis St-Cierges : ~09h30\nL'aller-retour en train est compris dans la carte de fête\nParking sur place : CHF 10.— (cash / TWINT)\n⚠️ Se présenter à la table d'annonce 30 min avant son heure de départ\n🏆 Remise des prix individuels : 21h00 au Barzelt\n\n🏕️ NUIT SUR PLACE — Camping\nCheck-in vendredi 15h00–20h00 — amener tente, sac de couchage, matelas\nDouches à la Turnhalle Schmittengässli\n🚫 Feu / grill / gaz strictement interdits\n\n📅 SAMEDI 27 JUIN — Concours par équipes\nArrivée libre, au plus tard à 12h00 — train compris dans la carte de fête\n⚠️ Chef d'équipe : s'annoncer à la meldestelle 30 min avant le 1er passage\nRepas de groupe : ~20h00 (à confirmer)\n🎉 Soirée dès 21h00 : DJ au Barzelt + Tornados au Festzelt\n\n🎒 À EMPORTER (tout le monde)\n✅ Carte de fête (distribuée par le coach)\n✅ Pièce d'identité officielle\n✅ Carte membre FSG numérique (site myFSG)\n✅ Tenue de club\n✅ Carte de débit / TWINT (site 100 % cashless)"
     },
     {
       jour: "3-4",
       mois: "Octobre",
       nom: "décathlon Ulm (Jedermannzehnkampf)",
       lieu: "Ulm",
-      description: "décathlon (10 disciplines) avec hauteur non officielle (donc plus simple), c'est vraiment une expérience cool et c'est rare de trouver des décathlons avec une ambiance familiale comme là-bas.",
-      organisation: "Le but serait de partir le vendredi au soir (le plus tôt possible) en voiture et de dormir 2 nuits à l'hôtel puis de repartir le dimanche 4 octobre pour arriver vers 23h30 à Saint-Cierge. le Club prend quelques frais en charge, mais faut compter à peu près 100.- par personnes sans la bouffe."
+      description: "décathlon (10 disciplines) avec hauteur non officiel (donc plus simple), c'est vraiment une expérience cool et c'est rare de trouver des décathlons avec une ambiance familiale comme la bas.",
+      organisation: "Le but serait de partir le vendredi  au soir (le plus tot possible) en voiture et de dormir 2 nuits à l'hotel puis de repartir le dimanche 4 octobre pour arriver vers 23h30 à Saint-Cierge.  le Club prend quelque frais en charge, mais faut compter un peux pres 100.- par perssonnes sans la bouffe."
     },
   ],
 
@@ -505,12 +515,12 @@ const CONTENU = {
      ============================================================ */
   evenements: [
     {
-      jour: "?",
-      mois: "?",
-      nom: "soirée de gym",
-      lieu: "grande salle de St-cierge",
-      description: "traditionnelle soirée de gym, on compte sur tout le monde pour venir (pas le droit de venir boire des verres si on fait pas le spectacle)",
-      organisation: "à venir mais pensez à des thèmes ou des danses et si vous êtes motivés à créer une chorégraphie c'est avec plaisir (vous pouvez le faire à plusieurs)"
+      jour: "15",
+      mois: "Nov",
+      nom: "Soirée de gym — Contes et légendes",
+      lieu: "Grande salle de St-Cierges",
+      description: "La traditionnelle soirée de gym revient en novembre 2026 ! Cette année le thème est \"Contes et légendes\". On compte sur tout le monde pour participer au spectacle (pas le droit de venir boire des verres sans participer 😄).",
+      organisation: "Dates : 15 novembre (répétition générale + 1re représentation), 20 et 21 novembre (représentations). Il faut trouver des idées de numéros / chorégraphies sur le thème \"Contes et légendes\". Si tu as une idée ou l'envie de créer quelque chose (seul·e ou en groupe), parle-en au coach !"
     },
   ],
 
@@ -521,8 +531,8 @@ const CONTENU = {
       pages « Membres » et « Feedback » tant que c'est vide.)
      Laisse "" (vide) tant que tu n'as pas le lien.
      ============================================================ */
-  lienFormulaireMembres: "https://docs.google.com/forms/d/e/1FAIpQLSflA15MoaV-2266KOuCnx9dSZVvmnZz-jTpw-WT5Q1oK56wcA/viewform?usp=dialog",
-  lienFormulaireFeedback: "https://docs.google.com/forms/d/e/1FAIpQLSeiFMhsTHSA0OMXFJ2VZAjDjoKTfOnrjZgRu3Wl5-hyNUUOfw/viewform?usp=publish-editor",
+  lienFormulaireMembres: "",
+  lienFormulaireFeedback: "",
 
 };
 
@@ -544,6 +554,7 @@ function show(id){
 
 /* ---------- Petit utilitaire anti-erreur (échappe le texte) ---------- */
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function escNL(s){return esc(s).replace(/\n/g,'<br>');}
 
 /* ---------- Accueil : intro + chiffres ---------- */
 document.getElementById('hero-intro').textContent = CONTENU.presentation;
@@ -561,6 +572,7 @@ if(CONTENU.annonces.length){
         <span class="date">${esc(a.date)}</span>
       </div>
       <p>${esc(a.texte)}</p>
+      ${a.lien?`<a class="annonce-lien" href="${esc(a.lien)}" target="_blank" rel="noopener">${esc(a.lienLabel||'En savoir plus →')}</a>`:''}
     </article>`).join('');
 }else{
   annDiv.innerHTML = `<div class="empty">Aucune annonce pour le moment.</div>`;
@@ -631,7 +643,7 @@ function renderComp(list, isEvent){
         <h3>${esc(c.nom)}</h3>
         <div class="lieu">📍 ${esc(c.lieu)}</div>
         <p>${esc(c.description)}</p>
-        ${c.organisation?`<div class="orga"><span class="lbl">Organisation</span><p>${esc(c.organisation)}</p></div>`:''}
+        ${c.organisation?`<div class="orga"><span class="lbl">Organisation</span><p>${escNL(c.organisation)}</p></div>`:''}
       </div>
     </article>`).join('');
 }
