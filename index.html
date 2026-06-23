@@ -206,6 +206,22 @@ tr.next-row td{border-top:2px solid var(--green-bright)}
 .orga .lbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:800;display:block;margin-bottom:4px}
 .orga p{margin:0;font-size:.92rem;color:var(--ink);line-height:1.75}
 
+/* ---------- INSCRIPTIONS aux compétitions ---------- */
+.inscription{margin-top:14px;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px}
+.inscription .lbl{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--green);font-weight:800;display:block;margin-bottom:10px}
+.insc-list{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:12px;min-height:22px}
+.insc-count{font-size:.78rem;font-weight:800;color:#fff;background:var(--green);padding:4px 11px;border-radius:999px;margin-right:4px}
+.insc-chip{font-size:.84rem;font-weight:600;background:#fff;color:var(--ink);padding:5px 11px;border-radius:999px;border:1px solid rgba(27,122,67,.18)}
+.insc-empty,.insc-err,.insc-soon{font-size:.86rem;color:var(--ink-soft);font-style:italic}
+.insc-err{color:var(--alert)}
+.insc-form{display:flex;gap:8px;flex-wrap:wrap}
+.insc-form input{flex:1;min-width:170px;font-family:inherit;font-size:.92rem;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:#fff}
+.insc-form input:focus{outline:none;border-color:var(--green-mid)}
+.insc-form button{font-family:inherit;font-weight:700;font-size:.9rem;color:#fff;background:var(--green);border:none;padding:9px 18px;border-radius:8px;cursor:pointer;transition:.2s}
+.insc-form button:hover{background:var(--green-deep)}
+.insc-form button:disabled{opacity:.5;cursor:default}
+.insc-msg{font-size:.82rem;font-weight:600;margin-top:8px;min-height:17px;color:var(--ink-soft)}
+
 /* events reuse comp styles with accent */
 .event .comp-date{background:linear-gradient(150deg,#b3661a,#d98a2b)}
 .event .comp-date .m{color:#ffe2bc}
@@ -495,6 +511,7 @@ const CONTENU = {
     {
       jour: "26-27",
       mois: "Juin",
+      id: "kerzers",
       nom: "fête du seeland / mittland",
       lieu: "Kerzers",
       description: "fête qui ressemble à une fédéral dans le fonctionnement. concourt individuelle le vendredi 26 juin avec 6 et 5 discipline pour les hommes (6 pour 2004 et plus agé) et 4 discipline pour les femmes. et concours de société 3 parties le jours d'après (27 juin), où on choisit 3 discipline qu on fait tous pour rapporté des points pour le groupe. Le but serait de faire le concours individuelle, puis de dormir au camping (j'imagine qu il y en a un) et d'enchainer sur le concours de société. le pdf de cette année est pas encore dispo, mais ça ressemble a celui de l'année passsé si vous avez besoin de plus d'info :http://stf2024.ch/wp-content/uploads/2023/09/Wettkampfvorschriften_2024_2023.09.09_definitiv.pdf",
@@ -503,6 +520,7 @@ const CONTENU = {
     {
       jour: "3-4",
       mois: "Octobre",
+      id: "ulm",
       nom: "décathlon Ulm (Jedermannzehnkampf)",
       lieu: "Ulm",
       description: "décathlon (10 disciplines) avec hauteur non officiel (donc plus simple), c'est vraiment une expérience cool et c'est rare de trouver des décathlons avec une ambiance familiale comme la bas.",
@@ -525,14 +543,22 @@ const CONTENU = {
   ],
 
   /* ============================================================
-     5) FORMULAIRES GOOGLE FORMS
+     5) INSCRIPTIONS AUX COMPÉTITIONS
+     Colle ici le lien de ton script Google (Apps Script) qui gère
+     les inscriptions. Tant que c'est "" (vide), les blocs d'inscription
+     affichent "pas encore activées". (Voir les instructions fournies.)
+     ============================================================ */
+  lienInscriptions: "https://script.google.com/macros/s/AKfycbw2eLr9bXQeKtUssZ7dCdtCrbD2aadZkMEXIk0aWAqGzAFHz6k4ohQ_gPeUKF8dfSvH0w/exec",
+
+  /* ============================================================
+     6) FORMULAIRES GOOGLE FORMS
      Colle ici le lien d'intégration de tes formulaires.
      (Comment l'obtenir : voir les instructions affichées sur les
       pages « Membres » et « Feedback » tant que c'est vide.)
      Laisse "" (vide) tant que tu n'as pas le lien.
      ============================================================ */
-  lienFormulaireMembres: "",
-  lienFormulaireFeedback: "",
+  lienFormulaireMembres: "https://docs.google.com/forms/d/e/1FAIpQLSflA15MoaV-2266KOuCnx9dSZVvmnZz-jTpw-WT5Q1oK56wcA/viewform?embedded=true",
+  lienFormulaireFeedback: "https://docs.google.com/forms/d/e/1FAIpQLSeiFMhsTHSA0OMXFJ2VZAjDjoKTfOnrjZgRu3Wl5-hyNUUOfw/viewform?embedded=true",
 
 };
 
@@ -633,6 +659,25 @@ if(!seances.length){
   trNote.textContent = `${seances.length} séance(s)` + (idxNext>=0 ? ` · la prochaine séance est mise en évidence.` : '.');
 }
 
+/* ---------- Inscriptions : lien + bloc HTML ---------- */
+const INSC_URL = (CONTENU.lienInscriptions||'').trim();
+
+function blocInscription(c){
+  if(!INSC_URL){
+    return `<div class="inscription"><span class="lbl">Inscriptions</span><p class="insc-soon">Les inscriptions en ligne ne sont pas encore activées.</p></div>`;
+  }
+  const id = esc(c.id || c.nom);
+  return `<div class="inscription" data-comp-id="${id}">
+    <span class="lbl">Inscriptions</span>
+    <div class="insc-list" data-role="list">Chargement…</div>
+    <div class="insc-form">
+      <input type="text" placeholder="Ton prénom et nom" data-role="input" maxlength="60">
+      <button type="button" data-role="btn">S'inscrire</button>
+    </div>
+    <p class="insc-msg" data-role="msg"></p>
+  </div>`;
+}
+
 /* ---------- Compétitions & Événements ---------- */
 function renderComp(list, isEvent){
   if(!list.length) return `<div class="empty">Rien de prévu pour le moment.</div>`;
@@ -644,11 +689,72 @@ function renderComp(list, isEvent){
         <div class="lieu">📍 ${esc(c.lieu)}</div>
         <p>${esc(c.description)}</p>
         ${c.organisation?`<div class="orga"><span class="lbl">Organisation</span><p>${escNL(c.organisation)}</p></div>`:''}
+        ${isEvent?'':blocInscription(c)}
       </div>
     </article>`).join('');
 }
 document.getElementById('competitions-list').innerHTML = renderComp(CONTENU.competitions, false);
 document.getElementById('evenements-list').innerHTML = renderComp(CONTENU.evenements, true);
+
+/* ---------- Inscriptions : chargement de la liste + envoi d'un nom ----------
+   Tout passe par des requêtes POST en "text/plain" vers le script Google,
+   ce qui évite les problèmes de CORS sur un site statique (GitHub Pages). */
+function afficherInscrits(listEl, noms){
+  if(!noms || !noms.length){
+    listEl.innerHTML = '<span class="insc-empty">Personne d\'inscrit\u00b7e pour l\'instant. Sois le ou la premier\u00b7e !</span>';
+    return;
+  }
+  listEl.innerHTML = `<span class="insc-count">${noms.length} inscrit\u00b7e${noms.length>1?'s':''}</span>` +
+    noms.map(n=>`<span class="insc-chip">${esc(n)}</span>`).join('');
+}
+async function apiInscriptions(payload){
+  const r = await fetch(INSC_URL, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(payload)
+  });
+  return r.json();
+}
+async function chargerInscrits(id, listEl){
+  try{
+    const data = await apiInscriptions({action:'list', id});
+    const noms = (data && data.inscrits) ? data.inscrits : [];
+    afficherInscrits(listEl, noms);
+    return noms;
+  }catch(e){
+    listEl.innerHTML = '<span class="insc-err">Liste indisponible pour le moment.</span>';
+    return null;
+  }
+}
+function initInscriptions(){
+  if(!INSC_URL) return;
+  document.querySelectorAll('.inscription[data-comp-id]').forEach(async box=>{
+    const id = box.dataset.compId;
+    const listEl = box.querySelector('[data-role=list]');
+    const input  = box.querySelector('[data-role=input]');
+    const btn    = box.querySelector('[data-role=btn]');
+    const msgEl  = box.querySelector('[data-role=msg]');
+    let deja = (await chargerInscrits(id, listEl)) || [];
+
+    async function envoyer(){
+      const nom = input.value.trim();
+      if(nom.length < 2){ msgEl.style.color='var(--alert)'; msgEl.textContent='Entre ton prénom et ton nom.'; return; }
+      if(deja.some(x=>x.toLowerCase()===nom.toLowerCase())){ msgEl.style.color='var(--green)'; msgEl.textContent='Tu es déjà inscrit\u00b7e ✔'; return; }
+      btn.disabled=true; msgEl.style.color='var(--ink-soft)'; msgEl.textContent='Enregistrement…';
+      try{
+        await apiInscriptions({action:'add', id, nom});
+        input.value='';
+        deja = (await chargerInscrits(id, listEl)) || deja;
+        msgEl.style.color='var(--green)'; msgEl.textContent='Inscription enregistrée ✔';
+      }catch(e){
+        msgEl.style.color='var(--alert)'; msgEl.textContent='Erreur, réessaie dans un instant.';
+      }finally{ btn.disabled=false; }
+    }
+    btn.addEventListener('click', envoyer);
+    input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); envoyer(); } });
+  });
+}
+initInscriptions();
 
 /* ---------- Formulaires (Membres / Feedback) ---------- */
 function renderForm(zoneId, url, instructions){
